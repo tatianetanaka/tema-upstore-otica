@@ -1,0 +1,366 @@
+{% if ProgressiveDiscounts %}
+<div class="container">
+    <div class="banner-header">
+        {% for discount in ProgressiveDiscounts %}
+            {% if discount.banner %}
+                <img src="{{ discount.banner }}" alt="{{discount.name}}"/>  
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<div class="container">
+    <div id="product-container" class="produto-wrapper product-detail">
+        {% element 'schema' { "product": product } %}
+        <div class="clearfix">
+            {% element 'snippets/breadcrumb' { "class": 'breadcrumb'} %}
+            <div class="box-col-product flex">
+                <div class="product-colum-left">
+                    {% if product.images %}
+                    <div class="box-gallery flex">
+
+                        <div class="nav-images">
+                            <div class="list swiper-container">
+                                <div class="swiper-wrapper">
+                                    {% for images in product.images %}
+                                        <div class="item swiper-slide">
+                                            <div class="box-img index-list {% if loop.first -%} active {%- endif %}" data-index="{{ loop.index }}">
+                                                <img class="swiper-lazy" data-src="{{ images.medium }}" alt="{{ product.name }} - Image thumb {{ loop.index }}" />
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="controls">
+                                <div class="arrow prev">
+                                    <svg class="icon" viewBox="0 0 451.847 451.847">
+                                        <path d="M97.141,225.92c0-8.095,3.091-16.192,9.259-22.366L300.689,9.27c12.359-12.359,32.397-12.359,44.751,0   c12.354,12.354,12.354,32.388,0,44.748L173.525,225.92l171.903,171.909c12.354,12.354,12.354,32.391,0,44.744   c-12.354,12.365-32.386,12.365-44.745,0l-194.29-194.281C100.226,242.115,97.141,234.018,97.141,225.92z"></path>
+                                    </svg>
+                                </div>
+                                <div class="arrow next">
+                                    <svg class="icon" viewBox="0 0 451.846 451.847">
+                                        <path d="M345.441,248.292L151.154,442.573c-12.359,12.365-32.397,12.365-44.75,0c-12.354-12.354-12.354-32.391,0-44.744   L278.318,225.92L106.409,54.017c-12.354-12.359-12.354-32.394,0-44.748c12.354-12.359,32.391-12.359,44.75,0l194.287,194.284   c6.177,6.18,9.262,14.271,9.262,22.366C354.708,234.018,351.617,242.115,345.441,248.292z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="image-show">
+
+                            {% if product.price_offer and settings.tag_desconto %}
+                                {% set porcentagemDesconto = 100 - ( product.price_offer / product.price ) * 100 %}
+                                {% if porcentagemDesconto < 100 %}
+                                    <div class="discount-line">
+                                        {{ porcentagemDesconto|number_format }}% OFF
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if product.video %}
+                                <div class="video-button" data-url="{{ product.video }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 314.068 314.068">
+                                        <path d="M293.002,78.53C249.646,3.435,153.618-22.296,78.529,21.068C3.434,64.418-22.298,160.442,21.066,235.534     c43.35,75.095,139.375,100.83,214.465,57.47C310.627,249.639,336.371,153.62,293.002,78.53z M219.834,265.801     c-60.067,34.692-136.894,14.106-171.576-45.973C13.568,159.761,34.161,82.935,94.23,48.26     c60.071-34.69,136.894-14.106,171.578,45.971C300.493,154.307,279.906,231.117,219.834,265.801z M213.555,150.652l-82.214-47.949     c-7.492-4.374-13.535-0.877-13.493,7.789l0.421,95.174c0.038,8.664,6.155,12.191,13.669,7.851l81.585-47.103     C221.029,162.082,221.045,155.026,213.555,150.652z"></path>
+                                    </svg>
+                                    <span>V&Iacute;DEO</span>
+                                </div>
+                            {% endif %}
+
+                            <div class="list swiper-container">
+                                <div class="swiper-wrapper">
+                                    {% for images in product.images %}
+                                        <div class="item swiper-slide">
+                                            <div class="box-img index-list {% if loop.first -%} active {%- endif %}" data-index="{{ loop.index }}">
+                                                <div class="zoom">
+                                                    <img class="swiper-lazy" data-src="{{ images.full }}" alt="{{ product.name }}" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="dots"></div>
+
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="product-colum-right">
+                    <div class="relative-area">
+                        <div class="fixed-info">
+                            <div id="loading-product-container" class="load-css">
+                                <div class="icon"></div>
+                            </div>
+                            {% set add = product.additional_button and Image('additional_button') ? 1 : 0 %}
+                            {% set firstProgressiveDiscount = ProgressiveDiscounts | first %}
+
+                            {% if product.featured or product.new or product.free_shipping or firstProgressiveDiscount %}
+                                <div class="list-seal-product flex f-wrap">
+                                    {% if product.featured %}
+                                        <div class="tag featured">Destaque</div>
+                                    {% endif %}
+                                    {% if product.new %}
+                                        <div class="tag new">Lan&ccedil;amento</div>
+                                    {% endif %}
+                                    {% if product.free_shipping %}
+                                        <div class="tag shipping">Frete gr&aacute;tis</div>
+                                    {% endif %}
+                                    {% if firstProgressiveDiscount %}
+                                        <div class="tag discount">
+                                            {{ firstProgressiveDiscount.tag }}
+                                        </div>
+                                    {% endif %}
+                                    {% if add %}
+                                    <div class="image-add">
+                                        {{ Image('additional_button') }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+
+                            <h1 class="product-name">{{ product.name }}</h1>
+
+                            {% set productDetails = productHelper.details() %}
+                            {% if 'class="dados-campo infoLancamento"' in productDetails %}
+                            <div class="product-release-date">
+                                Data de lan&ccedil;amento: {{ product.release_date | date('d/m/Y') }}
+                            </div>
+                            {% endif %}                            
+                            
+                            {% if 'class="availability"' in productDetails %}
+                                <div class="product-release-date">
+                                    Disponibilidade: {{ product.availability }}
+                                </div>
+                            {% endif %}
+
+                            <div class="line-info flex align-center">
+                                {% if product.reference and settings.show_reference %}
+                                    <span class="ref" id="product-reference" data-url="/mvc/store/product/variant_reference/?loja={{ store.id }}">{{ product.reference }}</span>
+                                {% endif %}
+                                {% if settings.star_list %}
+                                <div class="list-star flex cursor">
+                                    {% element 'snippets/ranking' {
+                                        'nota': product.ranking,
+                                        'total': true
+                                    } %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% if firstProgressiveDiscount %}
+                                <div class="progressive">
+                                    <p> {{ firstProgressiveDiscount.description }} </p>
+                                </div>
+                            {% endif %}
+                            {% if productHelper.banner() %}
+                            <div class="product-lote">
+                                {{ productHelper.banner() }}
+                            </div>
+                            {% endif %}
+                            
+                  
+                            {% if  productHelper.icons() %}
+                            <div class="list-icons">
+                                {{ productHelper.icons() }}
+                            </div>
+                            {% endif %}
+
+                            {% if product.additional_message %}
+                            <div class="info-product">
+                                {{ product.additional_message }}
+                            </div>
+                            {% endif %}
+                            {% if productHelper.bonus() %}{{ productHelper.bonus() }}{% endif %}
+                            <form id="form_comprar" method="post" data-app="product.buy-form" data-id="{{ product.id }}" action="{{ links.cart_add ~ product.id }}">
+                                <div class="box-variants">
+                                    {{ productHelper.variants() }}
+                                </div>
+                                {{ product.additional_information }}
+                                {{ productHelper.pricing() }}
+                          
+                                {{ productHelper.gifts() }}
+                                
+                                {{ productHelper.kit() }}
+                                <div class="box-price">
+                                    {{ productHelper.form() }}
+                                </div>
+                                {% if not product.upon_request and product.available and productHelper.wishlist() %}
+                                    <div class="wishlist">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -28 512.001 512" width="20" height="20"><path d="m256 455.515625c-7.289062 0-14.316406-2.640625-19.792969-7.4375-20.683593-18.085937-40.625-35.082031-58.21875-50.074219l-.089843-.078125c-51.582032-43.957031-96.125-81.917969-127.117188-119.3125-34.644531-41.804687-50.78125-81.441406-50.78125-124.742187 0-42.070313 14.425781-80.882813 40.617188-109.292969 26.503906-28.746094 62.871093-44.578125 102.414062-44.578125 29.554688 0 56.621094 9.34375 80.445312 27.769531 12.023438 9.300781 22.921876 20.683594 32.523438 33.960938 9.605469-13.277344 20.5-24.660157 32.527344-33.960938 23.824218-18.425781 50.890625-27.769531 80.445312-27.769531 39.539063 0 75.910156 15.832031 102.414063 44.578125 26.191406 28.410156 40.613281 67.222656 40.613281 109.292969 0 43.300781-16.132812 82.9375-50.777344 124.738281-30.992187 37.398437-75.53125 75.355469-127.105468 119.308594-17.625 15.015625-37.597657 32.039062-58.328126 50.167969-5.472656 4.789062-12.503906 7.429687-19.789062 7.429687zm-112.96875-425.523437c-31.066406 0-59.605469 12.398437-80.367188 34.914062-21.070312 22.855469-32.675781 54.449219-32.675781 88.964844 0 36.417968 13.535157 68.988281 43.882813 105.605468 29.332031 35.394532 72.960937 72.574219 123.476562 115.625l.09375.078126c17.660156 15.050781 37.679688 32.113281 58.515625 50.332031 20.960938-18.253907 41.011719-35.34375 58.707031-50.417969 50.511719-43.050781 94.136719-80.222656 123.46875-115.617188 30.34375-36.617187 43.878907-69.1875 43.878907-105.605468 0-34.515625-11.605469-66.109375-32.675781-88.964844-20.757813-22.515625-49.300782-34.914062-80.363282-34.914062-22.757812 0-43.652344 7.234374-62.101562 21.5-16.441406 12.71875-27.894532 28.796874-34.609375 40.046874-3.453125 5.785157-9.53125 9.238282-16.261719 9.238282s-12.808594-3.453125-16.261719-9.238282c-6.710937-11.25-18.164062-27.328124-34.609375-40.046874-18.449218-14.265626-39.34375-21.5-62.097656-21.5zm0 0"/></svg>
+                                        {{ productHelper.wishlist() }}
+                                    </div>
+                                {% endif %}
+                            </form>
+                            {% if productHelper.shipping() and not product.upon_request %}
+                            <div class="box-frete">
+                                {{ productHelper.shipping() }}
+                                <form class="new-frete flex justify-between">  
+                                    <label class="box-left flex align-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="23.13" viewBox="0 0 28 23.13">
+                                            <g transform="translate(-243 -747)">
+                                                <g transform="translate(243 744.565)">
+                                                    <path d="M.982 17.272V5.359a1.2 1.2 0 0  1.2-1.2h11.906a1.2 1.2 0 0 1 1.2 1.2v11.913a.4.4 0 0 1-.4.4H1.382a.4.4 0 0 1-.4-.4zm9.618 4.081a2.486 2.486 0 1 1-2.486-2.486 2.486 2.486 0 0 1 2.486 2.486zm-1.243 0A1.243 1.243 0 1 0 8.112 22.6a1.243 1.243 0 0 0 1.243-1.247zM5.97 18.867H.4a.4.4 0 0 0-.4.4v1.212a.4.4 0 0 0 .4.4h4.465a3.279 3.279 0 0 1 1.105-2.012zm17.635 2.486a2.486 2.486 0 1 1-2.486-2.486 2.486 2.486 0 0 1 2.486 2.486zm-1.243 0a1.243 1.243 0 1 0-1.243 1.247 1.243 1.243 0 0 0 1.243-1.247zM28 19.267v1.212a.4.4 0 0 1-.4.4h-3.234a3.281 3.281 0 0 0-6.494 0h-6.514a3.28 3.28 0 0 0-1.106-2.011h6.176V7.439a.8.8 0 0 1 .8-.8H21a3.2 3.2 0 0 1 2.649 1.408l2.432 3.6a3.2 3.2 0 0 1 .547 1.789v5.429h.972a.4.4 0 0 1 .4.4zm-4.053-7.525L22 8.978a.4.4 0 0 0-.327-.17h-3.031a.4.4 0 0 0-.4.4v2.763a.4.4 0 0 0 .4.4h4.978a.4.4 0 0 0 .327-.63z"/>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                        <span class="text">INFORME SEU CEP</span>
+                                        <input type="tel" class="crazy_cep" name="number-frete" minlength="9" required maxlength="9" placeholder="00000-000">
+                                    </label>
+                                    <button class="submit-frete">Calcular</button>
+                                </form>
+                                <div class="result"></div>
+                            </div>
+                            {% endif %} 
+                            {{ productHelper.social() }}       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    {% if productHelper.bundle() %}
+    <div class="compre-junto">
+        <div class="title-section"><span class="string">Compre Junto</span></div>
+        <div class="product-cross-sell row">
+            {{ productHelper.bundle() }}
+        </div>
+    </div>
+    {% endif %}
+    <div class="page-info-product">
+        {% for key, tab in productTabs %}
+            {% if (loop.index == 2 or productTabs|length < 2 ) and settings.ficha %}
+            <div id="ficha" class="section-box">
+                <div class="title-section"><span>{{ settings.title_ficha ? settings.title_ficha : 'Ficha t&eacute;cnica' }}</span></div>
+                <div class="board_htm">
+                    <table>
+
+                        <tr>
+                            <td>C&oacute;digo</td>
+                            <td>{{ product.reference ? product.reference : product.id }}</td>
+                        </tr>
+
+                        {% if product.ean %}
+                        <tr>
+                            <td>C&oacute;digo de barras</td>
+                            <td>{{ product.ean }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if settings.show_product_stock %}
+                        <tr>
+                            <td>Estoque</td>
+                            <td>{{ product.stock }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if product.model %}
+                        <tr>
+                            <td>Modelo</td>
+                            <td>{{ product.model }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if product.category_id %}
+                        {% set Category = Categories({ "id": product.category_id }) %}
+                        <tr>
+                            <td>Categoria</td>
+                            <td>{{ Category.name }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if settings.show_product_brand %}
+                            {% if product.brand %}
+                            <tr>
+                                <td>Marca</td>
+                                <td>{{ product.brand }}</td>
+                            </tr>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if product.included_items %}
+                        <tr>
+                            <td>Itens Inclusos</td>
+                            <td>{{ product.included_items }}</td>
+                        </tr>
+                        {% endif  %}
+
+                        {% if product.warranty %}
+                        <tr>
+                            <td>Garantia</td>
+                            <td>{{ product.warranty }}</td>
+                        </tr>
+                        {% endif  %}
+
+                    </table>
+                </div>
+            </div>
+            {% endif %}	
+            {% if tab.container_id and (key != 'payment_methods') and key != 'included_items' and key != 'warranty' %}
+            <div data-tab-id="{{ tab.container_id }}" class="section-box {{ key }}">
+                <div class="title-section"><span>{{ tab.description }}</span></div>
+                {% if key == 'comments' %}
+                    {% element 'product/comments' %}
+                {% elseif key == 'description' %}
+                    <div class="board_htm">
+                        {{ product.description ? product.description : product.description_small }}
+                    </div>               
+                {% elseif key == 'warranty' %}
+                    <div id="garantia" {{ tab.url ? 'data-url="'~tab.url~'"' }} class="prodBox">
+                    </div>
+                {% elseif key == 'downloads' %}                    
+                    <div id="{{ tab.container_id | replace({'#' : ''}) }}" {{ tab.url ? 'data-url="'~tab.url~'"' }} ></div>    
+                {% elseif 'AdditionalTab' in key %}
+                    <div data-id="{{ tab.container_id }}"></div>
+                {% elseif 'included_items' in key %}
+                    {{ product.included_items }}
+                {% elseif key == 'properties' %}
+                    <div class="board_htm">
+                        {% element 'product/properties' %}
+                    </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if tab.container_id and (key == 'payment_methods') %}
+                <div style="display: none !important;">
+                    <span data-tab-container-id="{{ tab.container_id }}" data-tab-url="{{ tab.url }}" style="display: none !important;">{{ tab.description }}</span>
+                    <div data-tab-id="{{ tab.container_id }}" class="section-box {{ key }}" style="display: none !important;"></div>
+                </div>
+            {% endif %}
+
+        {% endfor %}
+
+        {{ productTabs.custom.content }}
+    </div>
+</div>
+</div>
+{% set slide = true %}
+
+{% if product.related_products %}
+<div id="prognoos_lsi"></div>
+<div class="product-related">
+    <div class="container">
+        <div class="section-showcase">
+            {% element 'showcase' { 
+                "products": product.related_products,
+                "showcaseTitle": settings.title_related ? settings.title_related : "Produtos relacionados",
+                "slide": slide,
+            } %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if settings.history_position %}
+<div class="visited-section">
+    <div class="container">
+        <div class="section-showcase">
+            <div class="showcase list-slide">
+                <h2 class="title-section"><span>Produtos visitados</span></h2>
+                <div class="list-append"></div>
+                <div class="prev arrow-icon"></div>
+                <div class="next arrow-icon"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

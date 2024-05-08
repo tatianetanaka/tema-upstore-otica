@@ -1,0 +1,38 @@
+<div class="showcase {% if slide -%} list-slide {%- endif %}" data-product-columns="{{ settings.buy_list and settings.buy_list_mobile ? 1 : 2 }}" >
+
+    <h2 class="title-section">
+        <span>{{ showcaseTitle }}</span>
+    </h2>
+
+    {% if products | length > 0 %}
+
+        {% if slide %}
+            <div class="swiper-container">
+        {% endif %}
+
+        <div class="list-product {{ slide ? 'swiper-wrapper' : 'flex f-wrap' }}">
+            {% for item in products %}
+                <div class="item {{ slide ? 'swiper-slide' }}">
+                    {% element 'snippets/product' {
+                        "product" : item,
+                        "slide"   : slide
+                    } %}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if slide %}
+            </div>
+            <div class="prev arrow-icon"></div>
+            <div class="next arrow-icon"></div>
+        {% endif %}
+
+    {% else %}
+
+        <div class="msg-list flex justify-center">
+            :( Nenhum produto encontrado
+        </div>
+
+    {% endif %}
+
+</div>

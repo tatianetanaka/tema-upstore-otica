@@ -1,0 +1,27 @@
+<div class="swiper-slide">
+{% for item in products %}
+	<div class="item">
+		<a href="{{ item.link }}" class="flex product-low">
+			<div class="image">
+				<img class="swiper-lazy" data-src="{{ item.images[0].large }}" alt="{{ item.name }}">
+			</div>
+			<div class="content-full">
+				<span class="title">{{ item.name }}</span>
+				{% if settings.star_list %}
+				<div class="list-star flex">
+					{% element 'snippets/ranking' {
+						'nota': product.ranking,
+					} %}
+				</div>
+				{% endif %}
+				<div class="price">R$ {{ item.price_offer > 0 ? item.price_offer|currency : item.price|currency }}</div>
+				<div class="view">ver mais</div>
+			</div>
+		</a>
+	</div>
+
+	{% if loop.index % 4 == 0 and loop.index != loop.length %}
+</div><div class="swiper-slide">
+	{% endif %}
+{% endfor %}
+</div>

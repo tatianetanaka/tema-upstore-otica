@@ -1,0 +1,12 @@
+{% if products|length > 0 %}
+    <div class="showcase-catalog">
+        <ul class="list flex f-wrap row {% if settings.buy_list and settings.buy_list_mobile %} one-column {% endif %}">
+        {% for item in products %}
+            {% set ranking = product.ranking %}
+            <li class="item flex">
+                {% element 'snippets/product' {"product": item} %}
+            </li>            
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}

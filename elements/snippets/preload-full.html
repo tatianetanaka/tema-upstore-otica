@@ -1,0 +1,48 @@
+{% set listDesk = [] %}
+
+{% for i in 1..6 %}
+    {% set src = attribute(settings, 'banner_full_'~i~'_image') %}
+    {% set link = attribute(settings, 'banner_full_'~i~'_link') %}
+    {% set name = attribute(settings, 'banner_full_'~i~'_name') %}
+    {% set position = attribute(settings, 'banner_full_'~i~'_position') %}
+    {% set target = attribute(settings, 'banner_full_'~i~'_target') %}
+    {% set status = attribute(settings, 'banner_full_'~i~'_status') %}
+
+    {% if src != '' and status %}
+        {% set listDesk = listDesk|merge([{ "src": src, "link": link, "name": name, "position": position, "target": target }]) %}
+    {% endif %}
+
+{% endfor %}
+
+{% set listMob = [] %}
+
+{% for i in 1..6 %}
+    {% set src = attribute(settings, 'banner_full_mobile_'~i~'_image') %}
+    {% set link = attribute(settings, 'banner_full_mobile_'~i~'_link') %}
+    {% set name = attribute(settings, 'banner_full_mobile_'~i~'_name') %}
+    {% set position = attribute(settings, 'banner_full_mobile_'~i~'_position') %}
+    {% set target = attribute(settings, 'banner_full_mobile_'~i~'_target') %}
+    {% set status = attribute(settings, 'banner_full_mobile_'~i~'_status') %}
+
+    {% if src != '' and status %}
+        {% set listMob = listMob|merge([{ "src": src, "link": link, "name": name, "position": position, "target": target }]) %}
+    {% endif %}
+{% endfor %}
+
+{% if listMob|length and utils.is_mobile %}
+    {% set listDesk = listMob %}
+{% endif %}
+
+{% if listDesk|length %}
+  {% set positDesk = 0 %}
+  {% for i in 1..6 %}
+      {% set loopParent = loop.index %}
+      {% for list in listDesk %}
+          {% if loopParent == list.position|number_format and list.position == 1 %}
+          <link rel="preload" href="{{ asset(list.src) }}" as="image">
+          {% set positDesk = 1 %}
+          {% endif %}
+      {% endfor %}
+  {% endfor %}
+  
+{% endif %}

@@ -1,0 +1,10 @@
+<div class="line-logo flex justify-center align-center">
+  <a href="{{ store.url }}">
+    {% if settings.logo_dark %}<img src="{{ asset(settings.logo_dark) }}" alt="{{ store.name }}">{% endif %}
+    {% if 'home' in pages.current %}
+    <h1 class="title-store">{{ store.name }}</h1>
+    {% else %}
+    <div class="title-store">{{ store.name }}</div>
+    {% endif %}
+  </a>
+</div>

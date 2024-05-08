@@ -1,0 +1,85 @@
+<div class="content-home">
+    <div class="container">
+
+        {% element 'snippets/banners-list' %}
+    
+        {% if settings.text_destaque %}
+            {% if settings.home_rand %}
+                {% set productFeatured = Products({
+                    'filter': ['featured','available'],
+                    'limit': settings.qnt_destaque ? settings.qnt_destaque: 4,
+                    'order': 'rand'
+                }) %}
+            {% else %}
+                {% set productFeatured = Products({
+                    'filter': ['featured','available'],
+                    'limit': settings.qnt_destaque ? settings.qnt_destaque: 4,
+                }) %}
+            {% endif %}        
+            <div class="section-showcase">
+                {% element 'showcase' { 
+                    "products": productFeatured,
+                    "showcaseTitle": settings.text_destaque,
+                    "slide": settings.carrosel_index
+                } %}
+            </div>       
+        {% endif %}
+
+        {% element 'snippets/banner-extra' %}
+        {% element 'snippets/brands' %}
+
+    </div>
+
+    {% element 'snippets/categories-showcase' %}
+
+    <div class="container">
+        {% if settings.text_new %}
+            {% if settings.home_rand %}
+                {% set productNew = Products({
+                    'filter': ['new','available'],
+                    'limit': settings.qnt_new ? settings.qnt_new: 4,
+                    'order': 'rand'
+                }) %}
+            {% else %}
+                {% set productNew = Products({
+                    'filter': ['new','available'],
+                    'limit': settings.qnt_new ? settings.qnt_new: 4,
+                }) %}
+            {% endif %}
+            <div class="section-showcase">
+                {% element 'showcase' { 
+                    "products": productNew,
+                    "showcaseTitle": settings.text_new,
+                    "slide": settings.carrosel_index,
+                } %}
+            </div>
+        {% endif %}
+
+        {% for pages in pages.custom %}
+            {% if pages.info == "depoimentos_de_clientes" and settings.depoimentos %}
+                <div class="section-avaliacoes">
+                    <h2 class="title-section"><span>Depoimentos</span></h2>
+                    <div class="relative">
+                        {% element 'CustomerReview.reviews' %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        {% element 'snippets/banner-line' %}   
+
+        {% for pages in pages.custom %}
+            {% if pages.info == "noticias" and settings.noticias %}
+            <div class="section-notices" data-news="{{ asset('js/load-news.min.js') }}">
+                <h2 class="title-section"><a href="{{ pages.url }}">Postagens no Blog</a></h2>
+                <div class="noticias-content">
+                   <span class="loading-news-message">
+                        Carregando...
+                   </span>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+</div>

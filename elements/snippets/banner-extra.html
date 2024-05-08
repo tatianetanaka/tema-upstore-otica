@@ -1,0 +1,37 @@
+{% if banners.extra4 or banners.extra5 %}
+    {% if banners.extra5 and utils.is_mobile %}
+    
+        <div class="section-banners-center line-style">    
+            <div class="item">
+
+                {% set link = banners.extra5.link ? banners.extra5.tracked_link : null %}
+                {% if link %}
+                    <a href="{{ link }}" {% if banners.extra5.target == '_blank' %} target="_blank" rel="noopener noreferrer" {% endif %}>
+                        <img class="lazyload" data-src="{{ banners.extra5.src }}" alt="{{ banners.extra5.description }}">
+                    </a>
+                {% else %}
+                    <img class="lazyload" data-src="{{ banners.extra5.src }}" alt="{{ banners.extra5.description }}">
+                {% endif %}
+
+            </div>
+        </div>
+    
+    {% else %}
+    
+        <div class="section-banners-center line-style">    
+            <div class="item">
+
+                {% set link = banners.extra4.link ? banners.extra4.tracked_link : null %}
+                {% if link %}
+                    <a href="{{ link }}" {% if banners.extra4.target == '_blank' %} target="_blank" rel="noopener noreferrer" {% endif %}>
+                        <img class="lazyload" data-src="{{ banners.extra4.src }}" alt="{{ banners.extra4.description }}">
+                    </a>
+                {% else %}
+                    <img class="lazyload" data-src="{{ banners.extra4.src }}" alt="{{ banners.extra4.description }}">
+                {% endif %}
+
+            </div>
+        </div>
+        
+    {% endif %}
+{% endif %}

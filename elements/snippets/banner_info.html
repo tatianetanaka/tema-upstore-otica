@@ -1,0 +1,48 @@
+{% set listInfo = [] %}
+
+{% for i in 1..5 %}
+    {% set position = attribute(settings, 'icon_'~i~'_position') %}
+    {% set title = attribute(settings, 'linha_fio_title_'~i) %}
+    {% set img = attribute(settings, 'linha_fio_icon_'~i) %}
+    {% set description = attribute(settings, 'linha_fio_description_'~i) %}
+    {% if title %}
+
+        {% set listInfo = listInfo|merge([{ "position": position, "title": title, "img": img, "description": description }]) %}
+
+    {% endif %}
+
+{% endfor %}
+
+<div class="banner-info container">
+    <div class="{{ utils.is_mobile ? 'slide swiper-container' : 'open_desk flex justify-between' }} ">{# slide #}
+        {% if utils.is_mobile %}
+        <div class="swiper-wrapper">
+        {% endif %}
+        {% for i in 1..5 %}
+
+            {% set loopParent = loop.index %}
+
+            {% for list in listInfo %}
+                {% if list.position == loopParent %}
+                <div class="item{{ utils.is_mobile ? ' swiper-slide' }}">
+                    <div class="line flex justify-center align-center">
+                        {% if list.img %}
+                        <img class="icon{{ utils.is_mobile ? ' swiper-lazy' }}{{ settings.header_position and not utils.is_mobile ? ' lazyload' }}" {{ utils.is_mobile or settings.header_position ? 'data-' }}src="{{ asset(list.img) }}" alt="{{ list.title }}">
+                        {% endif %}
+                        <span class="text">
+                            <span class="featured">{{ list.title }}</span> {{ list.description }}
+                        </span>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+
+        {% if utils.is_mobile %}            
+        </div>
+        <div class="prev arrow-icon"></div>
+        <div class="next arrow-icon"></div>
+        {% endif %}
+        
+    </div>
+</div>

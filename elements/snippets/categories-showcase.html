@@ -1,0 +1,48 @@
+{% set listItem = [] %}
+{% for i in 1..1 %}
+    {% set name = attribute(settings, 'text_category_'~i) %}
+    {% set id = attribute(settings, 'id_category_'~i) %}
+    {% if id %}
+        {% set listItem = listItem|merge([{ "name": name, "id": id }]) %}
+    {% endif %}
+{% endfor %}
+
+{% if listItem %}
+<div class="bg-cat">
+    <div class="container">
+        <div class="cols flex align-center">
+            <div class="box-text">
+                {% set categoryTray = Categories( { "id": settings.id_category_1 } ) %}
+                <div class="title">{{ settings.text_category }}</div>
+                <div class="subtitle">{{ settings.subtext_category }}</div>
+                <a href="{{ categoryTray.link }}" class="botao-commerce">CONFIRA</a>
+            </div>
+            <div class="list-cat">
+            {% for item in listItem %}
+                {% set category = Categories({"id": item.id }) %}
+                <div class="title-section"><span>{{ item.name ? item.name : category.name }}</span></div>
+    
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">  
+                            
+                {% set product = Products({
+                    'filter': ['available'],
+                    'limit': settings.qnt_catego ? settings.qnt_catego : 4,
+                    'categories': [item.id],
+                    'order': 'rand'
+                })%} 
+    
+                {% element 'snippets/product-low' { 
+                    "products": product
+                } %}
+                    </div>
+                </div>
+    
+                <div class="prev arrow-icon"></div>
+                <div class="next arrow-icon"></div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

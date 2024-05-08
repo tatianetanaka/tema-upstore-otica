@@ -1,0 +1,36 @@
+<div>
+{% set variants = product.Variants[0].product_id ? product.Variants : product.variants %}
+{% set image_variant = 1 %}
+{% set image_thumb = 1 %}
+{% set image_thumb2 = 1 %}
+<pre><code>{{ dump(variants) }}</code></pre>
+	
+	{% for variant in variants %}
+	<div>
+		{% set image = variant.VariantImage[0].https ? variant.VariantImage[0].https : variant.images[0].full %}
+		{% set image2 = variant.VariantImage[1].https ? variant.VariantImage[1].https : variant.images[1].full %}
+		
+		{% for sku in variant.Sku %}
+			{% if sku.image_secure and (image_variant == 1 or image_variant != sku.image_secure) %}
+			{% set image_variant = sku.image_secure %}
+				<img src="{{ sku.image_secure }}" alt="secure color" />
+				
+			{% endif %}
+			
+		{% endfor %}
+		{% if image and ( image_thumb == 1 or image_thumb != image ) %}
+		{% set image_thumb = image %}
+		
+		<img style="height: 50px; width: auto" src="{{ image }}">
+		{% endif %}
+		{% if image2 and ( image_thumb2 == 1 or image_thumb2 != image2 ) %}
+		{% set image_thumb2 = image2 %}
+		
+		<img style="height: 50px; width: auto" src="{{ image2 }}">
+		{% endif %}
+
+		{#<pre>image code: {{ dump(image) }}</pre>#}
+	</div>
+	{% endfor %}
+	
+</div>

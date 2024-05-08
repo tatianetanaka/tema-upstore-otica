@@ -1,0 +1,37 @@
+{% set brands = [] %}
+
+{% for i in 1..12 %}
+    {% set position = attribute(settings, 'brand_'~i~'_position') %}
+    {% set link = attribute(settings, 'brand_'~i~'_url') %}
+    {% set img = attribute(settings, 'brand_'~i~'_image') %}
+
+    {% if img %}
+
+        {% set brands = brands|merge([{ "position": position, "img": img, "link": link }]) %}
+
+    {% endif %}
+
+{% endfor %}
+
+{% if brands|length and settings.brands_active %}
+<div class="section-brands">
+    <div class="swiper-container slide-brand">
+        <div class="list swiper-wrapper {% if brands|length < 5 and not utils.is_mobile %}block-center{% endif %}">
+            {% for i in 1..12 %}
+                {% set loopParent = loop.index %}
+                {% for list in brands %}
+                    {% if list.position == loopParent %}
+                        <div class="swiper-slide">
+                            <a {{ list.link ? 'href="'~list.link~'"' }} class="box-brand">
+                                <img class="swiper-lazy" data-src="{{ asset(list.img) }}" alt="Brand">
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="prev arrow-icon"></div>
+        <div class="next arrow-icon"></div>
+    </div>
+</div>
+{% endif %}

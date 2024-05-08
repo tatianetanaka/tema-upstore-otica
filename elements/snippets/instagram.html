@@ -1,0 +1,41 @@
+{#
+    {% if settings.instagram_token %}
+<div class="section-instagram" id="instagram" data-token="{{ settings.instagram_token }}">
+    <h2 class="title-section">SIGA NOSSO INSTAGRAM</h2>
+    <div class="overflow">
+        <div class="list flex">
+            {% if store.id != '709318' %}
+            <div class="item">
+            </div>
+            {% else %}
+            <div class="item">
+                <a href="https://www.instagram.com/agencianetzee/" target="_blank" class="box-image" rel="noreferrer noopener">
+                    <img class="lazy-insta transform" data-src="{{ asset('img/i-1.jpg') }}" alt="Instagram">
+                </a>
+            </div>
+            <div class="item">
+                <a href="https://www.instagram.com/agencianetzee/" target="_blank" class="box-image" rel="noreferrer noopener">
+                    <img class="lazy-insta transform" data-src="{{ asset('img/i-2.jpg') }}" alt="Instagram">
+                </a>
+            </div>
+            <div class="item">
+                <a href="https://www.instagram.com/agencianetzee/" target="_blank" class="box-image" rel="noreferrer noopener">
+                    <img class="lazy-insta transform" data-src="{{ asset('img/i-3.jpg') }}" alt="Instagram">
+                </a>
+            </div>
+            <div class="item">
+                <a href="https://www.instagram.com/agencianetzee/" target="_blank" class="box-image" rel="noreferrer noopener">
+                    <img class="lazy-insta transform" data-src="{{ asset('img/i-4.jpg') }}" alt="Instagram">
+                </a>
+            </div>
+            <div class="item">
+                <a href="https://www.instagram.com/agencianetzee/" target="_blank" class="box-image" rel="noreferrer noopener">
+                    <img class="lazy-insta transform" data-src="{{ asset('img/i-5.jpg') }}" alt="Instagram">
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+#}

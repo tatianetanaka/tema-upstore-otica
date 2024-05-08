@@ -1,0 +1,25 @@
+<div class="rastreio">
+        <div class="title">Rastrear pedido</div>
+    {% if settings.rastreio_op == "1" %}
+        <form target="_blank" method="get" action="https://www.vaichegar.com.br/">
+            <input autocomplete="off" type="text" name="id" placeholder="Digite seu c&oacute;digo aqui">
+            <button class="botao-commerce">Rastrear</button>
+        </form>
+    {% elseif settings.rastreio_op == "2" %}
+        <form target="_blank" class="rastreie" method="post" data-action="//rastreie.com/{query}" action="">
+            <input autocomplete="off" required type="text" placeholder="Digite seu c&oacute;digo aqui">
+            <button class="botao-commerce">Rastrear</button>
+        </form>
+    {% elseif settings.rastreio_op == "3" %}
+        <form target="_blank" class="rastreie" method="post" data-action="//www.muambator.com.br/pacotes/{query}/detalhes" action="">
+            <input autocomplete="off" required type="text" placeholder="Digite seu c&oacute;digo aqui">
+            <button class="botao-commerce">Rastrear</button>
+        </form>
+    {% else %}
+        <form target="_blank" method="post" action="https://www2.correios.com.br/sistemas/rastreamento/ctrl/ctrlRastreamento.cfm?">
+            <input type="hidden" name="track" value="track">
+            <input autocomplete="off" type="text" name="objetos" placeholder="Digite seu c&oacute;digo aqui">
+            <button class="botao-commerce">Rastrear</button>
+        </form>
+    {% endif %}
+</div>

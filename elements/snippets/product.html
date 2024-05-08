@@ -1,0 +1,109 @@
+{% set skuVariant = '' %}
+{% if product.has_variation and product.available and (product.stock > 0 or settings.without_stock_sale) and not product.upon_request %}
+    {% set variants = product.Variants[0].sku|length ? product.Variants[0].sku : product.variants[0].Sku|length %}
+
+    {% set skuVariant = variants == 1 ? ' variant' : ' second-variant' %}
+
+    {% if not settings.buy_list %}
+    {% set skuVariant = '' %}
+    {% endif %}
+{% endif %}
+
+<div class="product{{ skuVariant }}{{ settings.buy_list ? ' nb' }}{{  product.available and (product.stock > 0 or settings.without_stock_sale) and not product.upon_request ? ' show-down' }}">
+    
+    {% if pages.current == 'catalog' and settings.compare %}
+    <div class="compare-buttons">
+        {% set compareCSS = 'compare-hidden' %}
+        <a data-compare="remove" href="{{ links.compare_delete ~ product.id }}" class="flex justify-center align-center {{ not product.compare ? compareCSS }}">
+            <span class="filter-checkbox checked"></span>
+            {{ Translation("remover_comparar") }}
+        </a>
+        <a data-compare="add" href="{{ links.compare_add  ~ product.id }}" class="flex justify-center align-center {{ product.compare ? compareCSS }}">
+            <span class="filter-checkbox"></span>
+            {{ Translation("comparar_produto") }}
+        </a>
+    </div>
+    {% endif %}
+    <div class="image">
+        <a href="{{ product.link }}" class="space-image{{ settings.moldura == 1 ? ' large' }}{{ settings.moldura == 2 ? ' hrt' }}{{ settings.image_list and product.images[1] and (not utils.is_mobile) ? ' second' }}">
+            <img class="{{ slide ? 'swiper-lazy' : 'lazyload' }} transform" data-src="{{ settings.type_img ? product.images[0].full : product.images[0].large }}" alt="{{ product.name }}">
+            
+            {% if settings.image_list and product.images[1] and (not utils.is_mobile) %}
+                <img class="second-image transform" data-src="{{ settings.type_img ? product.images[1].full : product.images[1].large }}" alt="{{ product.name }}">
+            {% endif %}
+
+            {% if settings.tag_desconto %}
+
+                {% if product.price_offer and settings.tag_desconto %}
+                    {% set porcentagemDesconto = 100 - ( product.price_offer / product.price ) * 100 %}
+                    {% if porcentagemDesconto < 100 %}
+                        <div class="discount-line">{{ porcentagemDesconto|number_format }}% OFF</div>
+                    {% endif %}  
+                {% endif %}
+
+                {% for discount in product.ProgressiveDiscounts %}
+                    {% if discount.tag %}
+                        <div class="seal discount-progressive">
+                            <span>{{discount.tag}}</span> 
+                       </div> 
+                    {% endif %}
+                {% endfor %}
+
+                {% set shipping = product.free_shipping %}
+                {% set add = product.additional_button and Image('additional_button') ? 1 : 0 %}
+                {% set new = product.new %}
+                {% set featured = product.featured %}
+                {% if featured or shipping or new or add %}
+                <div class="seals">
+
+                    {% if featured %}
+                        <div class="seal featured">DESTAQUE</div>
+                    {% endif %}
+        
+                    {% if shipping %}
+                        <div class="seal shipping">FRETE GR&Aacute;TIS</div>
+                    {% endif %}
+
+                    {% if new %}
+                        <div class="seal new">LAN&Ccedil;AMENTO</div>
+                    {% endif %}
+                    
+                    {% if add %}
+                        <div class="image-add">
+                            {{ Image('additional_button') }}
+                        </div>
+                    {% endif %}
+
+                </div>
+                {% endif %}
+
+            {% endif %}
+        </a>
+    </div>
+    <a href="{{ product.link }}" class="info-product">
+        <div class="product-name">{{ product.name }}</div>
+        <div class="down-line">
+            {% if settings.star_list %}
+            <div class="list-star flex justify-center">
+                {% element 'snippets/ranking' {
+                    'nota': product.ranking,
+                } %}
+            </div>
+            {% endif %}
+            <div class="box-price">
+                <div class="price">{% element 'snippets/price' {"product": product} %}</div>
+                <div class="product-payment">
+                    {{ product.payment }}
+                </div>
+            </div>
+        </div>
+    </a>
+
+    {% if sku or settings.buy_list and not product.is_kit %}
+        {% element 'snippets/add-cart' { 'product': product } %}
+    {% else %}
+    <div class="variants">
+        <a href="{{ product.link }}">{{ settings.text_buy ? settings.text_buy : "Ver detalhes" }}</a>
+        </div>
+    {% endif %}
+</div>

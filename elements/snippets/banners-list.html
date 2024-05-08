@@ -1,0 +1,59 @@
+{% if banners.extra2 or banners.extra3 or banners.extra6 or banners.extra7 %}
+
+    {% if (banners.extra6 or banners.extra7) and utils.is_mobile %}
+
+        <div class="section-banners" data-length="{{ (banners.extra6 and banners.extra7) ? '2' : '1' }}">
+        
+            <div class="item">
+                {% set link = banners.extra6.link ? banners.extra6.tracked_link : null %}
+                {% if link %}
+                    <a href="{{ link }}" {% if banners.extra6.target == '_blank' %} target="_blank" rel="noopener noreferrer" {% endif %}>
+                        <img class="lazy-banner" data-src="{{ banners.extra6.src }}" alt="{{ banners.extra6.description }}">
+                    </a>
+                {% else %}
+                    <img class="lazy-banner" data-src="{{ banners.extra6.src }}" alt="{{ banners.extra6.description }}">
+                {% endif %}
+            </div>
+        
+            <div class="item">
+                {% set link = banners.extra7.link ? banners.extra7.tracked_link : null %}
+                {% if link %}
+                    <a href="{{ link }}" {% if banners.extra7.target == '_blank' %} target="_blank" rel="noopener noreferrer" {% endif %}>
+                        <img class="lazy-banner" data-src="{{ banners.extra7.src }}" alt="{{ banners.extra7.description }}">
+                    </a>
+                {% else %}
+                    <img class="lazy-banner" data-src="{{ banners.extra7.src }}" alt="{{ banners.extra7.description }}">
+                {% endif %}
+            </div>
+         
+        </div>
+    
+    {% else %}
+    
+        <div class="section-banners" data-length="{{ (banners.extra2 and banners.extra3) ? '2' : '1' }}">
+        
+            <div class="item">
+                {% set link = banners.extra2.link ? banners.extra2.tracked_link : null %}
+                {% if link %}
+                    <a href="{{ link }}" {% if banners.extra2.target == '_blank' %} target="_blank" rel="noopener noreferrer" {% endif %}>
+                        <img class="lazy-banner" data-src="{{ banners.extra2.src }}" alt="{{ banners.extra2.description }}">
+                    </a>
+                {% else %}
+                    <img class="lazyload" src="{{ asset('img/empty.png') }}" data-src="{{ banners.extra2.src }}" alt="{{ banners.extra2.alt }}" />
+                {% endif %}
+            </div>
+        
+            <div class="item">
+                {% set link = banners.extra3.link ? banners.extra3.tracked_link : null %}
+                {% if link %}
+                    <a href="{{ link }}" {% if banners.extra3.target == '_blank' %} target="_blank" rel="noopener noreferrer" {% endif %}>
+                        <img class="lazy-banner" data-src="{{ banners.extra3.src }}" alt="{{ banners.extra3.description }}">
+                    </a>
+                {% else %}
+                   <img class="lazy-banner" data-src="{{ banners.extra3.src }}" alt="{{ banners.extra3.description }}">
+                {% endif %}
+            </div>
+         
+        </div>
+    {% endif %}    
+{% endif %}

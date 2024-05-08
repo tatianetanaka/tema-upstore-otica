@@ -1,0 +1,47 @@
+{% if settings.show_modal_news %}
+{% set time = 'last-time' %}
+
+{% if settings.modal_news_position == 1 %}
+{% set time = 'init-start' %}
+
+{% elseif settings.modal_news_position == 2 %}
+{% set time = 'exit-window' %}
+{% endif %}
+<div class="modal-theme email-modal {{ time }}">
+  <div class="shadow"></div>
+  <div class="overflow">
+      <div class="center">
+          <div class="box-center">
+              <div class="close-icon"></div>
+              <div class="modal-box flex">
+                {% if settings.bg_modal_news %}
+                <div class="image">
+                  <img {{ time != 'init-start' ? 'data-' }}src="{{ asset(settings.bg_modal_news) }}" alt="Newsletter">
+                </div>
+                {% endif %}
+                <div class="box-text flex justify-center align-center">
+                  <div>
+                    {% if settings.logo %}
+                    <div class="logo flex justify-center">
+                      <img src="{{ asset(settings.logo) }}" alt="{{ store.name }}">
+                    </div>
+                    {% endif %}
+                    <div class="text-content">
+                      <div class="title">{{ settings.title_modal_news }}</div>
+                      <p>{{ settings.subtitle_modal_news }}</p>
+                    </div>
+                    <form action="/mvc/store/newsletter/" method="POST">
+                      <input type="hidden" name="loja" value="{{ store.id }}">
+                      <input spellcheck="false" autocomplete="off" name="name" class="text mail" type="text" placeholder="{{ settings.name_modal_news ? settings.name_modal_news : 'Informe o seu nome' }}">
+                      <input spellcheck="false" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required autocomplete="off" name="email" class="text mail" type="email" placeholder="{{ settings.news_placeholder ? settings.news_placeholder : 'Digite o seu melhor e-mail' }}">
+                      <button class="news-button">ENVIAR</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              
+          </div>
+      </div>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,10 @@
+{% if product.available and (product.stock > 0 or settings.without_stock_sale) and not product.upon_request %}
+<div class="variants">
+  <form class="add" data-id="{{ product.id }}">
+    <div class="flex add-cart">
+      <input required type="number" max="{{ product.stock }}" value="1">
+      <button class="action"></button>
+    </div>
+  </form>
+</div>
+{% endif %}

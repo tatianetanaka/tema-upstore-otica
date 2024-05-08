@@ -1,0 +1,81 @@
+{% if banner.home or banners.extra1 %}
+
+    {% if banners.extra1 and utils.is_mobile %}
+        
+        {% if banners.extra1.type == 'image' %}
+
+            <div class="banner-full">
+                {% set link = banners.extra1.link ? banners.extra1.tracked_link : null %}
+                {% if link %}
+                    <a href="{{ link }}" {% if banners.extra1.target == '_blank' %} target="_blank" rel="noopener noreferrer" {% endif %}>
+                        <img src="{{ banners.extra1.src }}" alt="{{ banners.extra1.description }}">
+                    </a>
+                {% else %}
+                    <img src="{{ banners.extra1.src }}" alt="{{ banners.extra1.description }}">
+                {% endif %}    
+            </div>
+
+        {% else %}
+        
+            <div class="banner-full" data-config='{"time": 5000, "fade": {{ settings.fade ? "true" : "false" }} }'>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+
+                        {% for slide in banners.extra1.slides %}
+                        <div class="swiper-slide">
+                            <a {{ slide.link ? ' href="'~slide.link~'" ' }} {% if slide.target == '_blank' %} target="_blank" rel="noopener noreferrer" {% endif %}>
+                                <img class="swiper-lazy" data-src="{{ slide.image }}" alt="{{ slide.label }}">
+                            </a>
+                        </div>
+                        {% endfor %}    
+                            
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                
+            </div>
+
+        {% endif %}
+
+    {% else %}
+
+        {% if banners.home.type == 'image' %}
+
+            <div class="banner-full">
+
+                {% set link = slideshow.link ? slideshow.tracked_link : null %}
+                {% if link %}
+                    <a href="{{ link }}" {% if banner.target == '_blank' %} target="_blank" rel="noopener noreferrer" {% endif %}>
+                        <img src="{{ banners.home.src }}" alt="{{ banners.home.description }}">
+                    </a>
+                {% else %}
+                    <img src="{{ banners.home.src }}" alt="{{ banners.home.description }}">
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <div class="banner-full" data-config='{"stop": {{ settings.stop_hover ? "true" : "false" }}, "time": {{ settings.time_slide ? settings.time_slide : 5000 }}, "fade": {{ settings.fade ? "true" : "false" }} }'>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+
+                        {% for slide in banners.home.slides %}
+                        <div class="swiper-slide">
+                            <a {{ slide.link ? ' href="'~slide.link~'" ' }} {% if slide.target == '_blank' %} target="_blank" rel="noopener noreferrer" {% endif %}>
+                                <img class="swiper-lazy" data-src="{{ slide.image }}" alt="{{ slide.label }}">
+                            </a>
+                        </div>
+                        {% endfor %}    
+                            
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+                
+            </div>
+
+        {% endif %}
+
+    {% endif %}
+
+{% endif %}    

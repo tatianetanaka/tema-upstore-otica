@@ -1,0 +1,6 @@
+{% if ("search" in pages.current) and not ("busca.php" in store.current_url) %}
+  {% set repla = store.current_url|replace({"//": ''}) %}
+  {% if repla|split('/')|length == 2 %}
+  <meta http-equiv="refresh" content=1;url="{{ store.secure_url }}/marcas/{{ repla|split('/')[1] }}">
+  {% endif %}
+{% endif %}
