@@ -8435,7 +8435,6 @@ div[style="clear:both;"] {
 .listaVarMultipla .inputQuantVariacao {
     height: 42px;
     padding: 0 5px !important;
-    width: 60px !important;
     text-align: center;
     font-size: 1rem;
     font-weight: 600;
@@ -12597,4 +12596,189 @@ fieldset {
     .hide-on-mobile{
         display: none;
     }    
+}
+
+
+/* sistema variacoes */
+
+.product-quantity-outra-variacao{
+    width: 100%;
+}
+
+.variacao-btn-scroll{
+    line-height: 45px;
+    background-color: var(--button_buy) !important;
+    color: #FFF;
+    margin-top: 25px;
+    padding: 0 30px;
+}
+
+.variacao-btn-scroll svg{
+    padding-top: 5px;
+}
+
+.lista-variacoes-cor .listaVarMultipla{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.lista-variacoes-cor .lista_radios.listaVarMultipla>li{
+    width: 185px;
+    justify-content: center;
+    border: 1px solid #e7e3e3;
+    padding-bottom: 10px;
+    flex-direction: column;
+}
+
+.lista-variacoes-cor .label-quant-var {
+    display: none;
+}
+
+.lista-variacoes-cor .varTit{
+    display: none;
+}
+
+.lista-variacoes-cor #product-form-box{
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.lista-variacoes-cor #bt_comprar{
+    width: 40%;
+}
+
+.lista-variacoes-cor .botao-commerce{
+    width: 100%;
+    padding: 10px 50px;
+    font-size: 15px;
+    line-height: 35px;
+}
+
+.variacaoDetalhes {
+    display: grid;
+    text-align: center;
+}
+
+.variacaoDetalhes .variacao-nome {
+    height: 32px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.variacaoDetalhes .variacao-preco {
+    color: #219ebc;
+    display: none;
+}
+
+.variacaoDetalhes .variacao-img {
+    height: 180px;
+    max-width: 180px;
+}
+
+.secao-variacoes{
+    margin-bottom: 30px;
+    margin-top: 50px;
+}
+
+.secao-variacoes .titulo-variacoes,
+.secao-variacoes .subtitulo-variacoes{
+    text-align: center;
+}
+
+.secao-variacoes .titulo-variacoes{
+    font-size: 1.425rem;
+    font-weight: 600;
+    color: var(--color_text_global);
+}
+
+.variacao-btn {
+    color: #000;
+    height: 100%;
+    width: 20px;
+    font-size: 20px;
+}
+
+.variacao-btn.rem-quant,
+.variacao-btn.add-quant{
+    background-color: transparent;
+}
+
+#form_comprar.lista-variacoes-cor .labelQuantVariacao .inputQuantVariacao{
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    height: 38px;
+    border: none;
+    width: 25px;
+    padding: 0;
+    text-align: center;
+    background-color: transparent;
+}
+
+.listaVarMultipla li .variacaoSimples{
+    padding: 10px;
+    border: 1px solid #A2A2A2;
+    cursor: pointer;
+}
+
+.listaVarMultipla li .var-selected{
+    border: 1px solid var(--color_primary);
+    background: var(--color_primary);
+    color: #FFF;
+}
+
+.listaVarMultipla li:not(:last-child){
+    margin-bottom: 0;
+}
+
+#menuVars .listaVarMultipla {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.labelQuantVariacao {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    border: 1px solid #e4e4e4;
+    border-radius: 5px;
+}
+
+#quant.quant-semvariacao{
+    margin-right: 15px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+@media (max-width:767px) {
+    .secao-variacoes{
+        margin-top: 30px;
+    }
+
+    .variacao-btn-scroll{
+        padding: 0 25px;
+    }
+
+    .secao-variacoes .subtitulo-variacoes{
+        font-size: 0.75rem;
+    }
+
+    .lista-variacoes-cor #bt_comprar{
+        width: 80%;
+    }
+
+    .lista-variacoes-cor .botao-commerce{
+        padding: 10px;
+        font-size: 13px;
+    }
 }

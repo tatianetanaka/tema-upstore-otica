@@ -1,0 +1,42 @@
+{% if product.available %}
+    {% if settings.without_stock_sale or product.stock > 0 %}
+    
+    <div class="box-price" id="product-form-box">
+        {% set variacoes_categorias = settings.categorias_variacao | split(';') %}
+        {% if product.category_id not in variacoes_categorias %}
+            <div class=" product-quantity-outra-variacao flex align-center">
+                <div data-app="product.quantity" class="product-quantity clearfix flex">
+                    <div>
+                        <span style="display:none"></span>
+                        <span id="plus" onclick="process(-1)"></span>
+                    </div>
+                    <input id="quant" name="quant" class="text {{ product.has_variation ? '' : ' quant-semvariacao'}}" size="1" type="text" value="1" maxlength="5" />
+                    <div>
+                        <span id="minus" ty onclick="process(1)"></span>
+                    </div>
+                </div>
+                <button type="submit" class="botao-comprar botao-commerce" {{ product.has_acceptance_terms == 1 ? attribute }}>
+                    <span>Comprar</span>
+                </button>
+            </div>
+
+        {% else %}
+            <div class="flex justify-center" style="width: 100%;">
+                {% if not product.has_variation %}
+                    <input id="quant" name="quant" class="text quant-semvariacao" size="1" type="text" value="1" maxlength="5" onkeyup="mascara(this,numeros,event);">
+                {% endif %}
+                <button type="submit" class="botao-comprar botao-commerce {{ product.has_variation ? ' variacao-btn-comprar'}} " {{ product.has_acceptance_terms == 1 ? attribute }}>
+                    <span>{{ product.has_variation ? 'Comprar todos os produtos selecionados' : 'Comprar'}}</span>
+                </button>
+            </div>
+        {% endif %}
+        
+        <span id="span_erro_carrinho" class="blocoAlerta" style="display:none;">Selecione uma op&ccedil;&otilde;es para varia&ccedil;&otilde;es do produto</span>
+    </div>
+    <script type="text/javascript">function process(quant){var value = parseInt(document.getElementById("quant").value);value+=quant;if( value > 0){document.getElementById("quant").value = value;	}} </script>
+    
+    <!-- <button type="submit" class="product-buy-button-mobile d-sm-none" {{ product.has_acceptance_terms == 1 ? attribute }}>
+        <span>Comprar</span>
+    </button> -->
+    {% endif %}
+{% endif %}
