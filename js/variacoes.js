@@ -63,6 +63,7 @@
             // $(".variacao-outra").show();
             $(".labelQuantVariacao").hide();
             $('.labelMultiVariacao').each(function() {
+
                 var nomeInteiro = $(this).text().split("-");
                 var nome = $(this).text().split("-")[0].trim();
 
@@ -118,18 +119,32 @@
             var variacaoId = $(this).parent().attr('class').split("variacao-")[1].split(" ")[0]
             $(this).attr('varId', variacaoId);
 
+            $.ajax({
+                method: "GET",
+                url: "/web_api/variants/" + variacaoId
+            }).done(function( response, textStatus, jqXHR ) {
+                imagePath = response.Variant.VariantImage[0].https;
+                $('.box-gallery .image-show img').attr('src', imagePath)
+                
+            }).fail(function( jqXHR, status, errorThrown ){
+                var response = $.parseJSON( jqXHR.responseText );
+                console.log(response);
+            });
+
             var selectedId = null;
 
-            if (selected.length > 0){
-                selectedId = selected.attr('varId');
-                $('#var' + selectedId).prop("checked", false)
-                selected.removeClass('var-selected');
-            }
-
-            if (variacaoId != selectedId){
-                $('#var' + variacaoId).prop("checked", true)
-                $(this).addClass('var-selected')
-                $('#quant').attr('name', 'variacoes[' + variacaoId + '][quant]')
+            if (!$(this).parent().hasClass('sem_estoque')) {
+                if (selected.length > 0){
+                    selectedId = selected.attr('varId');
+                    $('#var' + selectedId).prop("checked", false)
+                    selected.removeClass('var-selected');
+                }
+    
+                if (variacaoId != selectedId){
+                    $('#var' + variacaoId).prop("checked", true)
+                    $(this).addClass('var-selected')
+                    $('#quant').attr('name', 'variacoes[' + variacaoId + '][quant]')
+                }
             }
         })
 

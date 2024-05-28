@@ -4308,7 +4308,7 @@ input[size] {
         font-weight: 400;
     }
 
-    li:nth-child(n+5) .sub-line-category {
+    li:nth-child(n+4) .sub-line-category {
         left: auto;
         right: 0;
     }
@@ -8419,6 +8419,13 @@ div[style="clear:both;"] {
     margin-bottom: 10px;
 }
 
+.listaVarMultipla li.sem_estoque .variacaoSimples{
+    cursor: default;
+    background: #ddd;
+    color: #ababab;
+    position: relative;
+}
+
 .labelMultiVariacao {
     padding-right: 10px;
 }
@@ -8441,6 +8448,22 @@ div[style="clear:both;"] {
     margin-right: 5px;
 }
 
+.category-description{
+    max-height: 80px;
+    display: flex;
+}
+
+.category-description.active{
+    max-height: fit-content;
+}
+
+.ver-mais-category{
+    font-size: 12px;
+    font-style: italic;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
 #quantidade {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -8448,6 +8471,12 @@ div[style="clear:both;"] {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+}
+
+#quant{
+    border-radius: 10px;
+    margin-right: 5px;
+    text-align: center;
 }
 
 #estoque_variacao {

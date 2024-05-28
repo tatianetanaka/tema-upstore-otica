@@ -63,11 +63,13 @@
             </div>
 
             {% if category.small_description %}
-            <div class="description">
+            <div class="category-description description">
                 <div class="board_htm">
                     {{ category.small_description }}
                 </div>
             </div>
+            <div class="ver-mais-category" onclick="verMais()">Ver mais...</div>
+
             {% endif %}
             {% if products|length > 0 %}            
             <div class="catalog-content">
@@ -88,3 +90,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    function verMais() {
+        document.getElementsByClassName('category-description')[0].classList.add('active');
+        document.getElementsByClassName('ver-mais-category')[0].style.display = 'none';
+    }
+</script>
